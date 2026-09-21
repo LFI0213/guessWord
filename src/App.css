@@ -289,3 +289,621 @@
   font-size: 16px;
   z-index: 1000;
 }
+
+/* =========================
+Auth Page
+========================= */
+
+.auth-page {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 80px;
+
+  background: #f5f7fb;
+
+  padding: 40px 20px;
+
+  box-sizing: border-box;
+}
+
+/* =========================
+Auth Brand
+========================= */
+
+.auth-brand {
+  width: 320px;
+
+  text-align: center;
+}
+
+.auth-brand h1 {
+  margin: 0;
+
+  font-size: 42px;
+  font-weight: 800;
+
+  letter-spacing: 3px;
+
+  color: #222;
+}
+
+.auth-brand p {
+  margin: 12px 0 28px;
+
+  color: #777;
+
+  font-size: 16px;
+}
+
+/* =========================
+Word Preview
+========================= */
+
+.word-preview {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 6px;
+}
+
+.preview-tile {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  border: 2px solid #d3d6da;
+
+  background: white;
+
+  border-radius: 5px;
+
+  font-size: 22px;
+  font-weight: bold;
+
+  color: #333;
+
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+/* 正確位置 */
+.preview-tile.correct {
+  background: #6aaa64;
+
+  border-color: #6aaa64;
+
+  color: white;
+}
+
+
+/* 字母存在但位置錯誤 */
+.preview-tile.wrong-position {
+  background: #c9a227;
+
+  border-color: #c9a227;
+
+  color: white;
+}
+
+
+/* 單字中不存在 */
+.preview-tile.not-in-word {
+  background: #787c7e;
+
+  border-color: #787c7e;
+
+  color: white;
+}
+
+
+/* 滑鼠移過去 */
+.preview-tile:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 5px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================
+Auth Card
+========================= */
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+
+  padding: 40px;
+
+  background: white;
+
+  border-radius: 18px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.08);
+
+  animation: authCardAppear 0.4s ease;
+}
+
+
+/* 卡片出現動畫 */
+@keyframes authCardAppear {
+
+  from {
+    opacity: 0;
+
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================
+Subtitle
+========================= */
+
+.auth-subtitle {
+  margin: 0 0 8px;
+
+  color: #777;
+
+  font-size: 14px;
+}
+
+
+/* =========================
+Heading
+========================= */
+
+.auth-heading {
+  margin: 0 0 28px;
+
+  color: #222;
+
+  font-size: 28px;
+  font-weight: 700;
+}
+
+
+/* =========================
+Input
+========================= */
+
+.input-group {
+  text-align: left;
+
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #333;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.input-group input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 13px 14px;
+
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+
+  background: #fafafa;
+  color: #333;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
+}
+
+
+/* 滑鼠移到 Input */
+
+.input-group input:hover {
+  border-color: #bbb;
+}
+
+
+/* 點擊 Input */
+
+.input-group input:focus {
+  border-color: #6aaa64;
+
+  background: white;
+
+  box-shadow:
+    0 0 0 3px rgba(106, 170, 100, 0.12);
+}
+
+
+/* Placeholder */
+
+.input-group input::placeholder {
+  color: #aaa;
+}
+
+/* password右邊的顯示/隱藏按鈕 */
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+  padding-right: 70px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  border: none;
+  background: transparent;
+  color: #555;
+
+  font-size: 18px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================
+Login / Register Button
+========================= */
+
+.auth-submit {
+  width: 100%;
+  padding: 14px;
+  margin-top: 4px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #333;
+  color: white;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s,
+    background 0.2s,
+    box-shadow 0.2s;
+}
+
+
+/* 滑鼠移上去 */
+
+.auth-submit:hover {
+  background: #222;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 12px rgba(0, 0, 0, 0.12);
+}
+
+
+/* 點擊 */
+
+.auth-submit:active {
+  transform: translateY(0);
+
+  box-shadow: none;
+}
+
+
+/* Loading / Disabled */
+
+.auth-submit:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+/* =========================
+Message
+========================= */
+
+.auth-message {
+  margin-top: 18px;
+
+  padding: 12px 14px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  text-align: left;
+
+  animation: messageAppear 0.25s ease;
+}
+
+
+/* 訊息出現動畫 */
+
+@keyframes messageAppear {
+
+  from {
+    opacity: 0;
+
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+
+}
+
+
+/* 成功 */
+
+.auth-message.success {
+  background: #e9f8ef;
+
+  color: #237a45;
+
+  border: 1px solid #c9ecd5;
+}
+
+
+/* 錯誤 */
+
+.auth-message.error {
+  background: #fff0f0;
+
+  color: #c0392b;
+
+  border: 1px solid #f2cccc;
+}
+
+
+/* =========================
+Resend Verification
+========================= */
+
+.resend-button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 11px;
+
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+
+  background: white;
+  color: #444;
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+
+
+.resend-button:hover {
+  background: #f5f5f5;
+
+  border-color: #bbb;
+}
+
+
+.resend-button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================
+Switch Login / Register
+========================= */
+
+.switch-button {
+  display: block;
+  margin: 22px auto 0;
+  padding: 0;
+
+  border: none;
+  background: none;
+
+  color: #666;
+  font-size: 14px;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s;
+}
+
+
+.switch-button:hover {
+  color: #222;
+
+  text-decoration: underline;
+}
+
+/* =========================
+Continue with Discord
+========================= */
+
+.discord{
+  display: flex; /*讓logo和文字排一起*/
+  align-items: center; /*垂直置中*/
+  justify-content: center; /*整組內容水平置中*/
+  gap: 8px; /*logo和文字中間隔8px*/
+
+  width: 65%;
+  padding: 10px;
+  
+  margin: 10px auto 0;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #333;
+  color: white;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s,
+    background 0.2s,
+    box-shadow 0.2s;
+
+ }
+
+.discord-icon {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+}
+
+/* 滑鼠移上去 */
+
+.discord:hover {
+  background: #222;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* 點擊 */
+
+.discord:active {
+  transform: translateY(0);
+
+  box-shadow: none;
+}
+
+
+/* =========================
+Mobile
+========================= */
+
+@media (max-width: 800px) {
+
+  .auth-page {
+    flex-direction: column;
+
+    gap: 30px;
+
+    padding: 30px 20px;
+  }
+
+  .auth-brand {
+    width: 100%;
+  }
+
+  .auth-brand h1 {
+    font-size: 34px;
+
+    letter-spacing: 2px;
+  }
+
+  .auth-brand p {
+    margin-bottom: 20px;
+  }
+
+  .preview-tile {
+    width: 42px;
+
+    height: 42px;
+
+    font-size: 19px;
+  }
+
+  .auth-card {
+    max-width: 420px;
+
+    padding: 30px 25px;
+  }
+
+}
+
+/* =========================
+Small Mobile
+========================= */
+
+@media (max-width: 400px) {
+
+  .auth-page {
+    padding: 25px 15px;
+  }
+
+  .auth-brand h1 {
+    font-size: 29px;
+  }
+
+  .preview-tile {
+    width: 38px;
+
+    height: 38px;
+
+    font-size: 17px;
+  }
+
+  .auth-card {
+    padding: 25px 20px;
+  }
+
+  .auth-heading {
+    font-size: 25px;
+  }
+
+}

@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-
-import { supabase } from './lib/supabaseClient'
-import Auth from './components/Auth'
+import { useEffect, useState } from "react"
+import './App.css'
+import { supabase } from "./lib/supabaseClient"
+import Auth from "./components/Auth"
 
 function App() {
 
@@ -17,7 +17,7 @@ function App() {
     } = supabase.auth.onAuthStateChange(
       (event, session) => {
 
-        console.log('Auth event:', event)
+        console.log("Auth event:", event)
 
         setUser(session?.user ?? null)
       }
@@ -43,7 +43,7 @@ function App() {
   async function handleLogout() {
 
     const { error } = await supabase.auth.signOut({
-      scope: 'local'
+      scope: "local"
     })
 
     if (error) {
