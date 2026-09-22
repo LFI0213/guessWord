@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
 import './App.css'
+import "./components/SideMenu.css"
 import { supabase } from "./lib/supabaseClient"
 import Auth from "./components/Auth"
+import Game from "./components/Game"
 
 function App() {
 
@@ -40,46 +42,12 @@ function App() {
     setLoading(false)
   }
 
-  async function handleLogout() {
-
-    const { error } = await supabase.auth.signOut({
-      scope: "local"
-    })
-
-    if (error) {
-      console.error(error)
-    }
-  }
-
   if (loading) {
     return <p>Loading...</p>
   }
 
-  if (!user) {
-    return <Auth />
-  }
-
-  return (
-    <div>
-
-      <h1>Guess Word</h1>
-
-      <h2>登入成功！</h2>
-
-      <p>
-        Email：{user.email}
-      </p>
-
-      <p>
-        User ID：{user.id}
-      </p>
-
-      <button onClick={handleLogout}>
-        登出
-      </button>
-
-    </div>
-  )
+  if (!user) return <Auth />
+  else return <Game user={user}/>
 }
 
 export default App

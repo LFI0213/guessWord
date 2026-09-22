@@ -1,33 +1,30 @@
 import { useState } from "react";
-import "./App.css";
-import words from "./data/words";
+import words from "../data/words";
+import SideMenu from "./SideMenu"
 
 const MAX_ATTEMPTS = 6;
 const WORD_LENGTH = 5;
 
-function App() {
-  // 現在正在玩的答案
+function Game(user) {
+  //側邊選單是否開啟
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  //現在正在玩的答案
   const [currentWord, setCurrentWord] = useState(
     words[Math.floor(Math.random() * words.length)]
   );
 
-  // 玩家目前輸入的字
-  const [guess, setGuess] = useState("");
+  const [guess, setGuess] = useState(""); //玩家目前輸入的字
 
-  // 已經猜過的答案
-  const [guesses, setGuesses] = useState([]);
+  const [guesses, setGuesses] = useState([]); //已經猜過的答案
 
-  // 遊戲訊息
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(""); //遊戲訊息
 
-  // 鍵盤上每個字母目前的顏色
-  const [keyboardStatus, setKeyboardStatus] = useState({});
+  const [keyboardStatus, setKeyboardStatus] = useState({}); //鍵盤上每個字母目前的顏色
 
-  // 是否答對
-  const [isCorrect, setIsCorrect] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(false); // 是否答對
 
-  // 六次次數用完
-  const [isNotimes, setIsNotimes] = useState(false);
+  const [isNotimes, setIsNotimes] = useState(false); //六次次數用完
 
   // 玩家按下鍵盤字母
   const handleLetterClick = (letter) => {
@@ -188,7 +185,22 @@ const checkGuess = (guess, answer) => {
   return (
     <div className="game">
 
-      <h1>Wordle</h1>
+      {/* 漢堡選單按鈕 */}
+      <button
+        className="menu-button"
+        onClick={() => setIsMenuOpen(true)}
+      >
+        ☰
+      </button>
+
+      {/* 側邊選單 */}
+      <SideMenu
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        user={user}
+      />
+
+      <h1>Guess Word</h1>
 
       {message && (
         <div className="toast">
@@ -336,4 +348,4 @@ const checkGuess = (guess, answer) => {
   );
 }
 
-export default App;
+export default Game;
