@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
+import { supabase } from "./lib/supabaseClient"
 import './App.css'
 import "./components/SideMenu.css"
-import { supabase } from "./lib/supabaseClient"
+import "./components/Profile.css"
 import Auth from "./components/Auth"
 import Game from "./components/Game"
 

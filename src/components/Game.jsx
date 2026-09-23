@@ -5,7 +5,7 @@ import SideMenu from "./SideMenu"
 const MAX_ATTEMPTS = 6;
 const WORD_LENGTH = 5;
 
-function Game(user) {
+function Game({user}) {
   //側邊選單是否開啟
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
