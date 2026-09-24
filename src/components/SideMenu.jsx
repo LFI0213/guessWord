@@ -4,12 +4,12 @@ import Profile from "./Profile"
 
 function SideMenu({ isOpen, onClose, user}) {
 
-  console.log("SideMenu 收到的 user:", user);
+  /*console.log("SideMenu 收到的 user:", user);
   console.log("user_metadata:", user?.user_metadata);
   console.log("global_name:", user?.user_metadata?.custom_claims?.global_name);
   console.log("full_name:", user?.user_metadata?.full_name);
   console.log("name:", user?.user_metadata?.name);
-  console.log("avatar_url:", user?.user_metadata?.avatar_url);
+  console.log("avatar_url:", user?.user_metadata?.avatar_url);*/
   
   const [menuPage,setMenuPage] = useState("Menu"); //要顯示menu裡的哪個功能頁面
 

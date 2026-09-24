@@ -315,7 +315,7 @@ Auth Brand
 ========================= */
 
 .auth-brand {
-  width: 320px;
+  width: 450px;
 
   text-align: center;
 }
@@ -332,12 +332,24 @@ Auth Brand
 }
 
 .auth-brand p {
-  margin: 12px 0 28px;
+  margin: 24px 0 18px;
 
   color: #777;
 
   font-size: 16px;
 }
+
+/* =========================
+左側品牌標題
+========================= */
+
+.Title-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
 
 /* =========================
 Word Preview
@@ -352,8 +364,8 @@ Word Preview
 }
 
 .preview-tile {
-  width: 48px;
-  height: 48px;
+  width: 45px;
+  height: 45px;
 
   display: flex;
   align-items: center;
@@ -367,7 +379,7 @@ Word Preview
 
   border-radius: 5px;
 
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
 
   color: #333;

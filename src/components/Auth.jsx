@@ -161,7 +161,10 @@ function Auth() {
 
       <div className="auth-brand">
 
-        <h1>GUESS WORD</h1>
+        <img className="Title-img"
+          src="/guess-word-logo.png" 
+          alt="Guess Word" 
+        />
 
         <p>
           Guess. Learn. Keep playing.
