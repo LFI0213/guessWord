@@ -1,3 +1,4 @@
+import { FiChevronLeft } from "react-icons/fi";
 function Profile({ user, onBack }) {
 
   const avatarUrl = user?.user_metadata?.avatar_url; //找頭貼
@@ -16,7 +17,7 @@ function Profile({ user, onBack }) {
           className="profile-back"
           onClick={onBack}
         >
-          ←
+          <FiChevronLeft />
         </button>
 
       </div>

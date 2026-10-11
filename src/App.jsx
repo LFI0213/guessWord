@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
-import { supabase } from "./lib/supabaseClient"
-import './App.css'
-import "./components/SideMenu.css"
-import "./components/Profile.css"
-import Auth from "./components/Auth"
-import Game from "./components/Game"
+import { useEffect, useState } from "react";
+import { supabase } from "./lib/supabaseClient";
+import './App.css';
+import "./components/SideMenu.css";
+import "./components/Profile.css";
+import Auth from "./components/Auth";
+import Game from "./components/Game";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -26,7 +26,7 @@ function App() {
 
         // 登入成功時，建立/更新 profile
         if (currentUser && event === "SIGNED_IN") {
-          await saveProfile(currentUser)
+          await saveProfile(currentUser);
         }
       }
     )
@@ -61,11 +61,11 @@ function App() {
       data: { user }
     } = await supabase.auth.getUser()
 
-    setUser(user)
+    setUser(user);
 
     if(user) await saveProfile(user); //如果已經登入，就建立/更新資料
 
-    setLoading(false)
+    setLoading(false);
   }
 
   if (loading) {

@@ -1,6 +1,7 @@
-import { useState } from "react"
-import { supabase } from "../lib/supabaseClient"
+import { useState } from "react";
+import { supabase } from "../lib/supabaseClient";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import WordPreview from "./WordPreview";
 
 function Auth() {
 
@@ -173,29 +174,7 @@ function Auth() {
 
         {/* Wordle 風格字母 */}
 
-        <div className="word-preview">
-
-          <span className="preview-tile correct">
-            G
-          </span>
-
-          <span className="preview-tile wrong-position">
-            U
-          </span>
-
-          <span className="preview-tile not-in-word">
-            E
-          </span>
-
-          <span className="preview-tile correct">
-            S
-          </span>
-
-          <span className="preview-tile">
-            S
-          </span>
-
-        </div>
+        <WordPreview />
 
       </div>
 

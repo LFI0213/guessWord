@@ -1,6 +1,6 @@
 import { useState } from "react";
 import words from "../data/words";
-import SideMenu from "./SideMenu"
+import SideMenu from "./SideMenu";
 
 const MAX_ATTEMPTS = 6;
 const WORD_LENGTH = 5;
@@ -182,14 +182,6 @@ const checkGuess = (guess, answer) => {
   return (
     <div className="game">
 
-      {/* 漢堡選單按鈕 */}
-      <button
-        className="menu-button"
-        onClick={() => setIsMenuOpen(true)}
-      >
-        ☰
-      </button>
-
       {/* 側邊選單 */}
       <SideMenu
         isOpen={isMenuOpen}
@@ -197,8 +189,23 @@ const checkGuess = (guess, answer) => {
         user={user}
       />
 
-      <h1>Guess Word</h1>
+      <header className="game-header">
+        {/* 漢堡選單按鈕 */}
+        <button
+          className="menu-button"
+          onClick={() => setIsMenuOpen(true)}
+        >
+          ☰
+        </button>
 
+        {/* 上方遊戲logo */}
+        <img className="game-logo"
+          src="/guess-word-logo.png" 
+          alt="Guess Word" 
+        />
+      </header>
+
+      {/* 跳出訊息(xxxxx not in the list) */}
       {message && (
         <div className="toast">
           {message}
