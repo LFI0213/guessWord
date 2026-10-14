@@ -4,8 +4,10 @@ import { RiAccountCircleLine } from "react-icons/ri";
 import { FiBookOpen } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdLogout } from "react-icons/md";
+import { PiCaretRight } from "react-icons/pi";
 import WordPreview from "./WordPreview";
 import Profile from "./Profile";
+import { AuthError } from "@supabase/supabase-js";
 
 function SideMenu({ isOpen, onClose, user}) {
 
@@ -43,14 +45,20 @@ function SideMenu({ isOpen, onClose, user}) {
         {/* 主選單 */}
         {menuPage === "Menu" && (
           <>
-
-            {/* 關閉按鈕 */}
-            <button
-              className="menu-close"
-              onClick={onClose}
-            >
-              ×
-            </button>
+            <div className="top-header">
+              {/* 上方小字 */}
+              <div className="smallword">
+                YOUR GUESSWORD
+              </div>
+                       
+              {/* 關閉按鈕 */}
+              <button
+                className="menu-close"
+                onClick={onClose}
+              >
+                ×
+              </button>
+            </div>
             
             <img className="menu-game-logo"
               src="/guess-word-logo.png" 
@@ -59,38 +67,42 @@ function SideMenu({ isOpen, onClose, user}) {
 
             <div className="menu-content">
 
-                <button onClick={() => setMenuPage("Profile")}>
-                  <RiAccountCircleLine 
-                    size={30}
-                  />
-                  Profile
-                </button>
+              <button onClick={() => setMenuPage("Profile")}>
+                <RiAccountCircleLine 
+                  size={32}
+                />
+                <span className="menu-label">Profile</span>
+                <PiCaretRight className="rightArrow-icon"/>
+              </button>
 
               <button>
                 <FiBookOpen
-                  size={30}
+                  size={32}
                 />
-                How to Play
+                <span className="menu-label">How to Play</span>
+                <PiCaretRight className="rightArrow-icon"/>
               </button>
 
               <button>
                 <IoSettingsOutline 
-                  size={30}
+                  size={32}
                 />
-                Settings
+                <span className="menu-label">Settings</span>
+                <PiCaretRight className="rightArrow-icon"/>
               </button>
 
               <button onClick={handleLogout}>
                 <MdLogout
-                  size={30}
+                  size={32}
                 />
-                Log out
+                <span className="menu-label">Log out</span>
+                <PiCaretRight className="rightArrow-icon"/>
               </button>
 
             </div>
 
             <WordPreview 
-              size={35} fontSize={15} gap={4}
+              size={30} fontSize={14} gap={4}
               style={{
                 borderTop:"2px solid #e0e0e0",
                 paddingTop: "25px",
@@ -105,6 +117,7 @@ function SideMenu({ isOpen, onClose, user}) {
         {menuPage === "Profile" && (
           <Profile
             user={user}
+            onClose={onClose}
             onBack={() => setMenuPage("Menu")}
           />
         )}

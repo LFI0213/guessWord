@@ -1,6 +1,6 @@
 .profile-header {
   position: relative;
-  height: 50px;
+  height: 80px;
 }
 
 /* =========================
@@ -9,21 +9,29 @@
 
 .profile-back {
   position: absolute;
+  display: flex;
+  align-items: center;
 
   top: 20px;
   left: 15px;
+  gap: 2px;
 
-  width: 40px;
+  width: 80px;
   height: 40px;
 
   border: none;
   background: transparent;
 
-  font-size: 32px;
+  font-size: 16px;
+  font-weight: 600;
 
-  color: #333;
+  color:#969696;
 
   cursor: pointer;
+}
+
+.profile-back:hover{
+  color: #333;
 }
 
 /* =========================
@@ -45,7 +53,7 @@
 .profile-avatar {
   width: 130px;
   height: 130px;
-  border-radius: 10%;
+  border-radius: 50%;
   overflow: hidden;
 
   display: flex;

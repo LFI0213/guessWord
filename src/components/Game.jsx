@@ -1,6 +1,7 @@
 import { useState } from "react";
 import words from "../data/words";
 import SideMenu from "./SideMenu";
+import { PiCaretRight } from "react-icons/pi";
 
 const MAX_ATTEMPTS = 6;
 const WORD_LENGTH = 5;
@@ -26,18 +27,34 @@ function Game({user}) {
 
   const [isNotimes, setIsNotimes] = useState(false); //六次次數用完
 
+  const [revealingRow, setRevealingRow] = useState(null); //正在翻牌的列，null表示沒有正在翻牌
+
+  const isRevealing = revealingRow !== null; //是否正在翻牌
+
+  const isGameOver = isCorrect || isNotimes; //是否已經結束這一題
+
   //玩家按下鍵盤字母
   const handleLetterClick = (letter) => {
-    if (guess.length >= WORD_LENGTH) {
+    if (isRevealing || isGameOver) {
       return;
     }
 
-    setGuess(guess + letter);
+    setGuess((previousGuess) => {
+      if (previousGuess.length >= WORD_LENGTH) {
+        return previousGuess;
+      }
+
+      return previousGuess + letter;
+    });
   };
 
   //刪除最後一個字母
   const handleBackspace = () => {
-    setGuess(guess.slice(0, -1));
+    if (isRevealing || isGameOver) {
+      return;
+    }
+
+    setGuess((previousGuess) => previousGuess.slice(0, -1));
   };
 
   //鍵盤顏色優先權
@@ -50,45 +67,49 @@ function Game({user}) {
   };
 
   //判斷玩家猜的單字每個字母狀態
-const checkGuess = (guess, answer) => {
-  //先全部設定成not-in-word
-  const result = Array(WORD_LENGTH).fill("not-in-word");
+  const checkGuess = (guess, answer) => {
+    //先全部設定成not-in-word
+    const result = Array(WORD_LENGTH).fill("not-in-word");
 
-  //複製答案，用來記錄「還剩哪些字母可以配對」
-  const remainingLetters = answer.split("");
+    //複製答案，用來記錄「還剩哪些字母可以配對」
+    const remainingLetters = answer.split("");
 
-  //先找完全正確的字母
-  guess.split("").forEach((letter, index) => {
-    if (letter === answer[index]) {
-      result[index] = "correct";
+    //先找完全正確的字母
+    guess.split("").forEach((letter, index) => {
+      if (letter === answer[index]) {
+        result[index] = "correct";
 
-      //把已經配對成功的字母移除
-      remainingLetters[index] = null;
-    }
-  });
+        //把已經配對成功的字母移除
+        remainingLetters[index] = null;
+      }
+    });
 
-  //找位置錯誤的字母
-  guess.split("").forEach((letter, index) => {
-    //這個位置已經是綠色，不用再判斷
-    if (result[index] === "correct") {
-      return;
-    }
+    //找位置錯誤的字母
+    guess.split("").forEach((letter, index) => {
+      //這個位置已經是綠色，不用再判斷
+      if (result[index] === "correct") {
+        return;
+      }
 
-    const foundIndex = remainingLetters.indexOf(letter);
+      const foundIndex = remainingLetters.indexOf(letter);
 
-    if (foundIndex !== -1) {
-      result[index] = "wrong-position";
+      if (foundIndex !== -1) {
+        result[index] = "wrong-position";
 
-      //這個字母已經被使用，不能再給其他重複字母
-      remainingLetters[foundIndex] = null;
-    }
-  });
+        //這個字母已經被使用，不能再給其他重複字母
+        remainingLetters[foundIndex] = null;
+      }
+    });
 
-  return result;
-};
+    return result;
+  };
 
   //玩家送出答案
   const handleSubmit = () => {
+    if (isRevealing || isGameOver) {
+      return;
+    }
+
     const userGuess = guess.toLowerCase();
 
     //必須輸入五個字母
@@ -105,46 +126,64 @@ const checkGuess = (guess, answer) => {
       return;
     }
 
+    setMessage("");
+
+    //記錄這次需要翻牌的列
+    setRevealingRow(guesses.length);
+
     //把這次猜的答案加入guesses
-    setGuesses([...guesses, userGuess]);
-
-    const newKeyboardStatus = { ...keyboardStatus };
-
-    //判斷每個字母的狀態
-    const statuses = checkGuess(userGuess, currentWord);
-
-    //更新鍵盤顏色
-    statuses.forEach((status, index) => {
-      const letter = userGuess[index];
-
-      const oldStatus = newKeyboardStatus[letter];
-
-      if (getStatusPriority(status) > getStatusPriority(oldStatus)) 
-      {
-        newKeyboardStatus[letter] = status;
-      }
-    });
-
-    setKeyboardStatus(newKeyboardStatus);
-
-    // =========================
-
-    //判斷是否答對
-    if (userGuess === currentWord) {
-      setIsCorrect(true);
-    }
-
-    //判斷是否六次用完
-    if (guesses.length + 1 === MAX_ATTEMPTS) {
-      setIsNotimes(true);
-    }
+    setGuesses((previousGuesses) => [
+      ...previousGuesses,
+      userGuess,
+    ]);
 
     //清空目前輸入
     setGuess("");
   };
 
+  //最後一格翻牌完成後，更新鍵盤與遊戲結果
+  const handleRevealComplete = (userGuess) => {
+    //判斷每個字母的狀態
+    const statuses = checkGuess(userGuess, currentWord);
+
+    //更新鍵盤顏色
+    setKeyboardStatus((previousStatus) => {
+      const newKeyboardStatus = { ...previousStatus };
+
+      statuses.forEach((status, index) => {
+        const letter = userGuess[index];
+
+        const oldStatus = newKeyboardStatus[letter];
+
+        if (getStatusPriority(status) > getStatusPriority(oldStatus)) 
+        {
+          newKeyboardStatus[letter] = status;
+        }
+      });
+
+      return newKeyboardStatus;
+    });
+
+    //判斷是否答對
+    const correct = userGuess === currentWord;
+
+    setIsCorrect(correct);
+
+    //判斷是否六次用完(最後一次沒有猜對&&長度6)
+    setIsNotimes(
+      !correct && guesses.length === MAX_ATTEMPTS
+    );
+
+    //翻牌完成，解除輸入鎖定
+    setRevealingRow(null);
+  };
+
   //下一題
   const handleNextWord = () => {
+    if (isRevealing) {
+      return;
+    }
+
     let nextWord;
 
     do {
@@ -170,6 +209,12 @@ const checkGuess = (guess, answer) => {
 
     //清除鍵盤顏色
     setKeyboardStatus({});
+
+    //重置翻牌狀態
+    setRevealingRow(null);
+
+    //清除提示訊息
+    setMessage("");
   };
 
   //A ~ Z
@@ -215,93 +260,115 @@ const checkGuess = (guess, answer) => {
       {/* 猜測棋盤 */}
       <div className="board">
 
-        {/* 已經猜過的答案 */}
-        {guesses.map((word, rowIndex) => {
-          const statuses = checkGuess(word, currentWord);
+        {Array.from({
+          length: MAX_ATTEMPTS,
+        }).map((_, rowIndex) => {
+          //這列是否已經送出
+          const submittedWord = guesses[rowIndex];
+          const isSubmitted = submittedWord !== undefined;
+
+          //這列是否正在翻牌
+          const isFlipping = rowIndex === revealingRow;
+
+          //這列是否為目前輸入列
+          const isCurrent =
+            rowIndex === guesses.length &&
+            !isRevealing &&
+            !isGameOver;
+
+          let displayedWord = "";
+          let statuses = [];
+
+          //已經猜過的答案
+          if (isSubmitted) {
+            displayedWord = submittedWord;
+            statuses = checkGuess(submittedWord, currentWord);
+          }
+
+          //玩家目前正在輸入的答案
+          else if (isCurrent) {
+            displayedWord = guess;
+          }
+
+          //還沒有使用的格子
+          //保留displayedWord為空字串，顯示空白格子
 
           return (
             <div className="row" key={rowIndex}>
 
-              {word.split("").map((letter, index) => (
-                <div
-                  className={`tile ${statuses[index]}`}
-                  key={index}
-                >
-                  {letter.toUpperCase()}
-                </div>
-              ))}
+              {Array.from({
+                length: WORD_LENGTH,
+              }).map((_, index) => {
+                const letter = displayedWord[index] || "";
+                const status = statuses[index] || "";
+
+                const tileClassName = [
+                  "tile",
+                  isCurrent ? "current" : "",
+                  isCurrent && letter ? "pop" : "",
+                  status,
+                  isFlipping ? "flip" : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ");
+
+                return (
+                  <div
+                    className={tileClassName}
+                    key={`${index}-${letter}`}
+                    style={{
+                      "--flip-delay": `${index * 150}ms`,
+                    }}
+                    onAnimationEnd={(event) => {
+                      //只處理翻牌動畫結束
+                      if (event.animationName !== "tile-flip") {
+                        return;
+                      }
+
+                      //最後一格翻完，才完成這次送出流程
+                      if (
+                        isFlipping &&
+                        index === WORD_LENGTH - 1
+                      ) {
+                        handleRevealComplete(submittedWord);
+                      }
+                    }}
+                  >
+                    {letter.toUpperCase()}
+                  </div>
+                );
+              })}
 
             </div>
           );
         })}
 
-        {/* 玩家目前正在輸入的答案 */}
-        {guesses.length < MAX_ATTEMPTS &&
-          !isCorrect && (
-            <div className="row">
-
-              {Array.from({
-                length: WORD_LENGTH,
-              }).map((_, index) => (
-                <div
-                  className="tile current"
-                  key={index}
-                >
-                  {guess[index]?.toUpperCase() || ""}
-                </div>
-              ))}
-
-            </div>
-          )}
-
-        {/* 還沒有使用的格子 */}
-        {Array.from({
-          length:
-            MAX_ATTEMPTS -
-            guesses.length -
-            (isCorrect ? 0 : 1),
-        }).map((_, rowIndex) => (
-
-          <div
-            className="row"
-            key={`empty-${rowIndex}`}
-          >
-
-            {Array.from({
-              length: WORD_LENGTH,
-            }).map((_, index) => (
-              <div
-                className="tile"
-                key={index}
-              ></div>
-            ))}
-
-          </div>
-
-        ))}
-
       </div>
 
       {/* 下一題按鈕 */}
-      {(isCorrect || isNotimes) && (
-        <div className="message">
-
-          <button
-            className="next-button"
-            onClick={handleNextWord}
-          >
-            Next Question
-          </button>
-
-          <div
+      <div className="message"
+        style={{
+          visibility:(isCorrect || isNotimes) ? "visible":"hidden"
+        }}
+      >
+        <p>
+          The answer is <span className="answer-word">{currentWord}</span>
+        </p>
+                  
+        <button
+          className="next-button"
+          onClick={handleNextWord}
+        >
+          Next Question
+          <PiCaretRight
             style={{
-              marginTop:"8px"
-              }}>
-            The answer is {currentWord}
-          </div>
+              marginTop:"3px",
+              marginLeft:"5px",
+            }} 
+          />
+        </button>
 
-        </div>
-      )}
+      </div>
 
       {/* 虛擬鍵盤 */}
       <div className="keyboard">

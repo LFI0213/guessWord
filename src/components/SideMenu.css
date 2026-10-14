@@ -37,8 +37,8 @@
   top: 0;
   left: 0;
 
-  width: 280px;
-  height: 100vh;
+  width: 400px;
+  height: 100dvh;
 
   display: flex;
   flex-direction: column;
@@ -93,12 +93,32 @@
 
 
 /* 遮罩打開 */
-
 .menu-overlay.open {
   opacity: 1;
   visibility: visible;
 }
 
+.top-header{
+  display: flex;
+
+  height:80px;
+
+  align-items: center;
+}
+
+/* =========================
+   上方小字
+   ========================= */
+   
+.smallword{
+  font-size: 10px;
+  font-weight: 600;
+
+  padding: 0 26px;
+
+  color:#969696;
+  letter-spacing: 1.5px; /* 字之間的間距 */
+}
 
 /* =========================
    關閉按鈕
@@ -108,7 +128,8 @@
   position: absolute;
 
   top: 20px;
-  left: 15px;
+  right: 20px;
+  left: auto;
 
   width: 40px;
   height: 40px;
@@ -116,27 +137,30 @@
   border: none;
   background: transparent;
 
-  font-size: 32px;
+  font-size: 26px;
 
   color: #333;
 
   cursor: pointer;
 }
 
+.menu-close:hover{
+  border-radius: 20%;
+  background: #ebeaea;
+}
 
 /* =========================
    Menu logo
    ========================= */
 
 .menu-game-logo {
-  margin-top: 80px;
+  margin-top: 22px;
 
   padding: 0 25px;
 
-  max-width: 100%;
+  max-width: 80%;
   height: auto;
 }
-
 
 /* =========================
    Menu 內容
@@ -145,17 +169,18 @@
 .menu-content {
   padding: 10px 25px;
   margin-top: 20px;
-  flex: 1;
+  flex: 1; /*佔據Logo和WordPreview之間的剩餘空間*/
+  min-height: 0; /*允許Flex子元素縮小到內容高度以下*/
+  overflow-y: auto; /*內容超出可用高度時可以上下捲動*/
 }
 
 .menu-content button {
   display: flex;
   align-items: center;
   gap: 12px;
-
   width: 100%;
 
-  padding: 12px 15px;
+  padding: 18px 15px;
   margin: 8px 0;
 
   border: none;
@@ -164,7 +189,9 @@
   background: transparent;
   color: #222;
 
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  
   text-align: left;
 
   cursor: pointer;
@@ -175,5 +202,23 @@
 }
 
 .menu-content button:hover {
-  background-color: #c5e7c1;
+  background-color: #d7f3d4;
+}
+
+.menu-label {
+  margin-bottom: 3px;
+}
+
+.rightArrow-icon{
+  margin-left: auto;
+}
+
+@media (max-width: 600px) {
+  .menu-game-logo {
+    margin-top: 65px;
+  }
+
+  .menu-content {
+    margin-top: 12px;
+  }
 }

@@ -1,3 +1,9 @@
+:root {
+  --game-max-width: 1320px;
+  --header-height: 94px;
+  --header-inset: 40px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -11,7 +17,19 @@ body,
   min-height: 100%;
 
   font-family:
+    Inter,
+    "Noto Sans TC",
+    -apple-system,
     Arial,
-    Helvetica,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Microsoft JhengHei",
     sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
 }
