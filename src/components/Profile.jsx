@@ -1,20 +1,26 @@
+import { useState } from "react";
+import { supabase } from "../lib/supabaseClient";
 import { PiCaretLeft } from "react-icons/pi";
 
-function Profile({ user, onBack, onClose}) {
+function Profile({ user, profile,onProfileUpdated,onBack, onClose}) {
 
   const avatarUrl = user?.user_metadata?.avatar_url; //找頭貼
 
   const username =
-        user?.user_metadata?.custom_claims?.global_name ||
-        user?.user_metadata?.full_name ||
-        "Player";
+        profile?.username || "Player";
 
   const createTime = user?.created_at || "Wrong Time";
 
+  const formatTime = new Date(createTime).toLocaleDateString("en-GB",{
+    day:"numeric",
+    month:"long",
+    year:"numeric",
+  });
+
   return (
     <>
-      {/* 標題 */}
-      <div className="profile-header">
+      {/* 返回和關閉按鈕 */}
+      <div className="top">
 
         <button
           className="profile-back"
@@ -37,6 +43,23 @@ function Profile({ user, onBack, onClose}) {
 
       </div>
 
+      {/* 標題 */}
+      <div className="profile-header">
+
+        <p>
+          GUESSWORD / PROFILE
+        </p>
+
+        <h2>
+          Profile
+        </h2>
+
+        <p className="slogan">
+          Every guess is a step forward
+        </p>
+
+      </div>
+
       {/* 內容 */}
       <div className="profile-content">
 
@@ -56,16 +79,18 @@ function Profile({ user, onBack, onClose}) {
 
         </div>
 
-        {/* username */}
-        <h3 className="profile-username">
-          {username}
-        </h3>
+        <div className="nameAndtime-container">
+          {/* username */}
+          <h4 className="profile-username">
+            {username}
+          </h4>
 
-        {/* createTime */}
-        <text className="profile-createtime">
-          Joined {createTime}
-        </text>
-
+          {/* createTime */}
+          <text className="profile-createtime">
+            Joined {formatTime}
+          </text>
+        </div>
+      
       </div>
     </>
   );

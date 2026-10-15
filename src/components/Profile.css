@@ -1,4 +1,4 @@
-.profile-header {
+.top {
   position: relative;
   height: 80px;
 }
@@ -35,24 +35,58 @@
 }
 
 /* =========================
+   標題列
+   ========================= */
+.profile-header{
+  display: flex;
+  flex-direction: column;
+
+  padding: 0 26px;
+}
+
+.profile-header p{
+  font-size: 10px;
+  font-weight: 600;
+
+  color:#6aaa64;
+  letter-spacing: 1.5px; /* 字之間的間距 */
+}
+
+.profile-header h2{
+  font-size: 30px;
+  margin:0;
+}
+
+.profile-header .slogan{
+  font-size: 10px;
+  font-weight: 600;
+
+  color:#969696;
+  letter-spacing: 1px;
+}
+
+/* =========================
    底下顯示內容
    ========================= */
 
 .profile-content {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  
   align-items: center;
-  margin-top: 30px;
-}
 
+  margin-top: 30px;
+  padding: 0 26px;
+  gap: 16px;
+}
 
 /* =========================
    頭貼
    ========================= */
 
 .profile-avatar {
-  width: 130px;
-  height: 130px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   overflow: hidden;
 
@@ -72,10 +106,17 @@
   object-fit: cover;
 }
 
-/* =========================
-   使用者名稱
-   ========================= */
+.nameAndtime-container{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
 .profile-username{
-    text-align: center;
+  margin: 4px 0;
+}
+
+.profile-createtime{
+  font-size: 12px;
+  color:#969696;
 }

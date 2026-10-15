@@ -9,7 +9,7 @@ import WordPreview from "./WordPreview";
 import Profile from "./Profile";
 import { AuthError } from "@supabase/supabase-js";
 
-function SideMenu({ isOpen, onClose, user}) {
+function SideMenu({ isOpen, onClose, user,profile,onProfileUpdated}) {
 
   /*console.log("SideMenu 收到的 user:", user);
   console.log("user_metadata:", user?.user_metadata);
@@ -47,9 +47,9 @@ function SideMenu({ isOpen, onClose, user}) {
           <>
             <div className="top-header">
               {/* 上方小字 */}
-              <div className="smallword">
+              <p className="smallword">
                 YOUR GUESSWORD
-              </div>
+              </p>
                        
               {/* 關閉按鈕 */}
               <button
@@ -117,6 +117,8 @@ function SideMenu({ isOpen, onClose, user}) {
         {menuPage === "Profile" && (
           <Profile
             user={user}
+            profile={profile}
+            onProfileUpdated={onProfileUpdated}
             onClose={onClose}
             onBack={() => setMenuPage("Menu")}
           />

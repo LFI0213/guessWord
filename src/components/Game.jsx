@@ -6,7 +6,7 @@ import { PiCaretRight } from "react-icons/pi";
 const MAX_ATTEMPTS = 6;
 const WORD_LENGTH = 5;
 
-function Game({user}) {
+function Game({user,profile,onProfileUpdated}) {
   //側邊選單是否開啟
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -232,6 +232,8 @@ function Game({user}) {
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
         user={user}
+        profile={profile}
+        onProfileUpdated={onProfileUpdated}
       />
 
       <header className="game-header">
